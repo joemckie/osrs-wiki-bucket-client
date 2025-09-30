@@ -1,5 +1,5 @@
 {
-  "name": "osrswiki-bucket-client",
+  "name": "osrs-wiki-bucket-client",
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts",
