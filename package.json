@@ -1,0 +1,4 @@
+{
+  "name": "mediawiki-bucket-client",
+  "packageManager": "yarn@4.9.1"
+}
