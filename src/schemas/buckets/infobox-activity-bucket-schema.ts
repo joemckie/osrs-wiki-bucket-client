@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const infoboxActivitySchema = z.object({
+export const infoboxActivityBucketSchema = z.object({
   bucketName: z.literal('infobox_activity'),
   fields: z.object({
     image: z.string().nonempty(),
@@ -9,4 +9,4 @@ export const infoboxActivitySchema = z.object({
   }),
 });
 
-export type InfoboxActivityBucket = z.infer<typeof infoboxActivitySchema>;
+export type InfoboxActivityBucket = z.infer<typeof infoboxActivityBucketSchema>;

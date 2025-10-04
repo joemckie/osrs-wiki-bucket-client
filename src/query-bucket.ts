@@ -1,26 +1,4 @@
-import type { ConditionalPick } from 'type-fest';
-import type { DropsLineBucket } from './schemas/buckets/dropsline-bucket-schema';
-import type { CombatAchievementBucket } from './schemas/buckets/combat-achievement-bucket-schema';
-import type { ExchangeBucket } from './schemas/buckets/exchange-bucket-schema';
-import type { FeedbackBucket } from './schemas/buckets/feedback-bucket-schema';
-import type { InfoboxActivityBucket } from './schemas/buckets/infobox-activity-bucket-schema';
-import type { InfoboxBonusesBucket } from './schemas/buckets/infobox-bonuses-bucket-schema';
-import type { InfoboxConstructionBucket } from './schemas/buckets/infobox-construction-bucket-schema';
-import type { InfoboxItemBucket } from './schemas/buckets/infobox-item-bucket-schema';
-import type { InfoboxLocationBucket } from './schemas/buckets/infobox-location-bucket-schema';
-import type { InfoboxMonsterBucket } from './schemas/buckets/infobox-monster-bucket-schema';
-
-type Bucket =
-  | CombatAchievementBucket
-  | DropsLineBucket
-  | ExchangeBucket
-  | FeedbackBucket
-  | InfoboxActivityBucket
-  | InfoboxBonusesBucket
-  | InfoboxConstructionBucket
-  | InfoboxItemBucket
-  | InfoboxLocationBucket
-  | InfoboxMonsterBucket;
+import type { Bucket } from './schemas/buckets/bucket-schema';
 
 type Selector<T extends Bucket['fields']> = Partial<Record<keyof T, true>>;
 
@@ -42,7 +20,7 @@ export async function queryBucket<
   },
 >(
   bucket: BucketName,
-  { select, limit = 0, offset = 0, where = null }: Options,
+  { select, limit = 0, offset = 0, where = '' }: Options,
 ): Promise<BucketLineItem[]> {
   const query = [
     `bucket("${bucket}")`,
@@ -58,8 +36,6 @@ export async function queryBucket<
     ...(where ? [`where(${where})`] : []),
     'run()',
   ].join('.');
-
-  console.log(query);
 
   return [];
 }

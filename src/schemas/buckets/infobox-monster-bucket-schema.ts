@@ -3,7 +3,7 @@ import { leagueRegionSchema } from '../osrs/league-region-schema';
 
 const immunitySchema = z
   .enum(['Immune', 'Not Immune'])
-  .pipe(z.transform((val) => val === 'Immune'));
+  .transform((val) => val === 'Immune');
 
 export const infoboxMonsterBucketSchema = z.object({
   bucketName: z.literal('infobox_monster'),

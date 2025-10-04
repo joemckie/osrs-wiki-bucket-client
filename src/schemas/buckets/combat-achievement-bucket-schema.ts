@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import z from 'zod';
 import { combatAchievementTierSchema } from '../osrs/combat-achievement-tier-schema';
 import { combatAchievementTypeSchema } from '../osrs/combat-achievement-type-schema';
 import { leagueRegionSchema } from '../osrs/league-region-schema';
