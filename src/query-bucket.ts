@@ -80,7 +80,7 @@ export async function queryBucket<
       throw limitedResponseSchema.safeParse(data).error;
     }
 
-    return data;
+    return data.bucket;
   } catch (e) {
     console.error('Error querying bucket:', e);
 
