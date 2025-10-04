@@ -1,12 +1,21 @@
 import z from 'zod';
+import { leagueRegionSchema } from '../osrs/league-region-schema';
+import { sharedBucketSchema } from './bucket-page-name-schema';
 
-export const dropsLineSchema = z.object({
-  bucketName: z.literal('dropsline'),
-  fields: z.object({
-    item_name: z.string().nonempty(),
-    drop_json: z.string().nonempty(),
-    rare_drop_table: z.boolean(),
-  }),
+export const infoboxNpcBucketSchema = z.object({
+  bucketName: z.literal('infobox_npc'),
+  fields: z
+    .object({
+      default_version: z.boolean(),
+      image: z.string().nonempty(),
+      is_members_only: z.boolean(),
+      league_region: leagueRegionSchema,
+      npc_id: z.int().nonnegative(),
+      release: z.iso.date(),
+      examine: z.string().nonempty(),
+      location: z.string().nonempty(),
+    })
+    .extend(sharedBucketSchema.shape),
 });
 
-export type DropsLine = z.infer<typeof dropsLineSchema>;
+export type InfoboxNpcBucket = z.infer<typeof infoboxNpcBucketSchema>;

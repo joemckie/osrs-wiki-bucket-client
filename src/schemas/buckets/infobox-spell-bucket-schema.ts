@@ -1,12 +1,19 @@
 import z from 'zod';
+import { sharedBucketSchema } from './bucket-page-name-schema';
 
-export const dropsLineSchema = z.object({
-  bucketName: z.literal('dropsline'),
-  fields: z.object({
-    item_name: z.string().nonempty(),
-    drop_json: z.string().nonempty(),
-    rare_drop_table: z.boolean(),
-  }),
+const spellbookSchema = z.enum(['normal', 'ancient', 'lunar', 'arceuus']);
+
+export const infoboxSpellBucketSchema = z.object({
+  bucketName: z.literal('infobox_spell'),
+  fields: z
+    .object({
+      image: z.string().nonempty(),
+      is_members_only: z.boolean(),
+      spellbook: spellbookSchema,
+      uses_material: z.array(z.string()).nullable(),
+      json: z.string(),
+    })
+    .extend(sharedBucketSchema.shape),
 });
 
-export type DropsLine = z.infer<typeof dropsLineSchema>;
+export type InfoboxSpellBucket = z.infer<typeof infoboxSpellBucketSchema>;

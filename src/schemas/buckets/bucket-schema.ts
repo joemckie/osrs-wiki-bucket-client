@@ -10,6 +10,10 @@ import { infoboxConstructionBucketSchema } from './infobox-construction-bucket-s
 import { infoboxItemBucketSchema } from './infobox-item-bucket-schema';
 import { infoboxLocationBucketSchema } from './infobox-location-bucket-schema';
 import { infoboxMonsterBucketSchema } from './infobox-monster-bucket-schema';
+import { infoboxNpcBucketSchema } from './infobox-npc-bucket-schema';
+import { infoboxScenerySchema } from './infobox-scenery-bucket-schema';
+import { infoboxSpellBucketSchema } from './infobox-spell-bucket-schema';
+import { interfaceBucketSchema } from './interface-bucket-schema';
 
 export const bucketSchema = z.discriminatedUnion('bucketName', [
   combatAchievementBucketSchema,
@@ -22,6 +26,10 @@ export const bucketSchema = z.discriminatedUnion('bucketName', [
   infoboxItemBucketSchema,
   infoboxLocationBucketSchema,
   infoboxMonsterBucketSchema,
+  infoboxNpcBucketSchema,
+  infoboxScenerySchema,
+  infoboxSpellBucketSchema,
+  interfaceBucketSchema,
 ]);
 
 export type Bucket = z.infer<typeof bucketSchema>;
