@@ -1,0 +1,68 @@
+import z from 'zod';
+import { leagueRegionSchema } from '../osrs/league-region-schema';
+
+const immunitySchema = z
+  .enum(['Immune', 'Not Immune'])
+  .pipe(z.transform((val) => val === 'Immune'));
+
+export const infoboxMonsterBucketSchema = z.object({
+  bucketName: z.literal('infobox_monster'),
+  fields: z.object({
+    default_version: z.boolean(),
+    name: z.string().nonempty(),
+    image: z.string().nonempty(),
+    is_members_only: z.boolean(),
+    id: z.int().nonnegative(),
+    examine: z.string().nonempty(),
+    league_region: leagueRegionSchema,
+    release_date: z.iso.date(),
+    version_anchor: z.string().nonempty(),
+    combat_level: z.int().nonnegative(),
+    poisonous: z.string().nonempty(),
+    attribute: z.string().nonempty(),
+    hitpoints: z.int().nonnegative(),
+    max_hit: z.string().nonempty(),
+    slayer_level: z.int().nonnegative(),
+    slayer_experience: z.number().nonnegative(),
+    slayer_category: z.string().nonempty(),
+    uses_skill: z.string().nonempty(),
+    assigned_by: z.string().nonempty(),
+    attack_level: z.int().nonnegative(),
+    strength_level: z.int().nonnegative(),
+    defence_level: z.int().nonnegative(),
+    ranged_level: z.int().nonnegative(),
+    magic_level: z.int().nonnegative(),
+    magic_attack_bonus: z.int().nonnegative(),
+    range_attack_bonus: z.int().nonnegative(),
+    stab_attack_bonus: z.int().nonnegative(),
+    slash_attack_bonus: z.int().nonnegative(),
+    crush_attack_bonus: z.int().nonnegative(),
+    stab_defence_bonus: z.int().nonnegative(),
+    slash_defence_bonus: z.int().nonnegative(),
+    crush_defence_bonus: z.int().nonnegative(),
+    magic_defence_bonus: z.int().nonnegative(),
+    range_defence_bonus: z.int().nonnegative(),
+    light_range_defence_bonus: z.int().nonnegative(),
+    standard_range_defence_bonus: z.int().nonnegative(),
+    heavy_range_defence_bonus: z.int().nonnegative(),
+    attack_bonus: z.int().nonnegative(),
+    strength_bonus: z.int().nonnegative(),
+    range_strength_bonus: z.int().nonnegative(),
+    magic_damage_bonus: z.int().nonnegative(),
+    poison_immune: immunitySchema,
+    venom_immune: immunitySchema,
+    thrall_immune: immunitySchema,
+    cannon_immune: immunitySchema,
+    burn_immune: immunitySchema,
+    attack_style: z.string().nonempty(),
+    attack_speed: z.int().nonnegative(),
+    experience_bonus: z.number().nonnegative(),
+    flat_armour: z.int().nonnegative(),
+    size: z.int().nonnegative(),
+    freeze_resistance: z.string().nonempty(),
+    elemental_weakness: z.string().nonempty(),
+    elemental_weakness_percent: z.int().nonnegative(),
+  }),
+});
+
+export type InfoboxMonsterBucket = z.infer<typeof infoboxMonsterBucketSchema>;
