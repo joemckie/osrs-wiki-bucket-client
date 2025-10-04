@@ -77,8 +77,7 @@ export async function queryBucket<
         Extract<keyof Options['select'], keyof BucketFields>
       >(data, limitedResponseSchema)
     ) {
-      // Parse again to get detailed Zod errors
-      limitedResponseSchema.parse(data);
+      throw limitedResponseSchema.safeParse(data).error;
     }
 
     return data;
