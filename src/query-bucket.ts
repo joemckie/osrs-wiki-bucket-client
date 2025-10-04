@@ -50,13 +50,8 @@ export async function queryBucket<
     },
   });
 
-  const requestedBucketSchema = bucketSchema.options.find(
-    (
-      b,
-    ): b is Extract<
-      (typeof bucketSchema)['options'][number],
-      ZodObject<{ bucketName: ZodLiteral<BucketName> }>
-    > => [...b.def.shape.bucketName.values].includes(bucket),
+  const requestedBucketSchema = bucketSchema.options.find((b) =>
+    [...b.def.shape.bucketName.values].includes(bucket),
   );
 
   requestedBucketSchema?.shape.bucket.element.shape;
