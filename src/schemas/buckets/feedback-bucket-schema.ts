@@ -1,5 +1,6 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const feedbackBucketSchema = z.object({
   bucketName: z.literal('feedback'),
@@ -7,7 +8,7 @@ export const feedbackBucketSchema = z.object({
     .object({
       id: z.string().nonempty(),
       comment: z.string().nonempty(),
-      resolved: z.boolean(),
+      resolved: wikiBooleanSchema,
       category: z.string().nonempty(),
       timestamp: z.string().nonempty(),
     })

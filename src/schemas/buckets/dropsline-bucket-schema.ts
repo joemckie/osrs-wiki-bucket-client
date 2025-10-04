@@ -1,5 +1,6 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const dropsLineSchema = z.object({
   bucketName: z.literal('dropsline'),
@@ -7,7 +8,7 @@ export const dropsLineSchema = z.object({
     .object({
       item_name: z.string().nonempty(),
       drop_json: z.string().nonempty(),
-      rare_drop_table: z.boolean(),
+      rare_drop_table: wikiBooleanSchema,
     })
     .extend(sharedBucketSchema.shape),
 });

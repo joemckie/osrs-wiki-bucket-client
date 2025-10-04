@@ -1,6 +1,7 @@
 import z from 'zod';
 import { leagueRegionSchema } from '../osrs/league-region-schema';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 const immunitySchema = z
   .enum(['Immune', 'Not Immune'])
@@ -10,10 +11,10 @@ export const infoboxMonsterBucketSchema = z.object({
   bucketName: z.literal('infobox_monster'),
   fields: z
     .object({
-      default_version: z.boolean(),
+      default_version: wikiBooleanSchema,
       name: z.string().nonempty(),
       image: z.string().nonempty(),
-      is_members_only: z.boolean(),
+      is_members_only: wikiBooleanSchema,
       id: z.int().nonnegative(),
       examine: z.string().nonempty(),
       league_region: leagueRegionSchema,

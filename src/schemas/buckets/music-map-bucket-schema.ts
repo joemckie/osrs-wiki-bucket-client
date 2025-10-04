@@ -1,15 +1,16 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
-export const dropsLineSchema = z.object({
-  bucketName: z.literal('dropsline'),
+export const musicMapBucketSchema = z.object({
+  bucketName: z.literal('music_map'),
   fields: z
     .object({
-      item_name: z.string().nonempty(),
-      drop_json: z.string().nonempty(),
-      rare_drop_table: z.boolean(),
+      location_json: z.string().nonempty(), // TODO: add JSON schema
+      music_tracks: z.string().nonempty(),
+      is_historic: wikiBooleanSchema,
     })
     .extend(sharedBucketSchema.shape),
 });
 
-export type DropsLine = z.infer<typeof dropsLineSchema>;
+export type MusicMapBucket = z.infer<typeof musicMapBucketSchema>;

@@ -1,14 +1,15 @@
 import z from 'zod';
 import { leagueRegionSchema } from '../osrs/league-region-schema';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const infoboxNpcBucketSchema = z.object({
   bucketName: z.literal('infobox_npc'),
   fields: z
     .object({
-      default_version: z.boolean(),
+      default_version: wikiBooleanSchema,
       image: z.string().nonempty(),
-      is_members_only: z.boolean(),
+      is_members_only: wikiBooleanSchema,
       league_region: leagueRegionSchema,
       npc_id: z.int().nonnegative(),
       release: z.iso.date(),

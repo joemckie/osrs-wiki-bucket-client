@@ -1,15 +1,21 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
-export const dropsLineSchema = z.object({
-  bucketName: z.literal('dropsline'),
+export const recipeBucketSchema = z.object({
+  bucketName: z.literal('recipe'),
   fields: z
     .object({
-      item_name: z.string().nonempty(),
-      drop_json: z.string().nonempty(),
-      rare_drop_table: z.boolean(),
+      uses_material: z.string().nonempty(),
+      uses_tool: z.string().nonempty(),
+      uses_facility: z.string().nonempty(),
+      is_members_only: wikiBooleanSchema,
+      is_boostable: z.string().nonempty(),
+      uses_skill: z.string().nonempty(),
+      source_template: z.string().nonempty(),
+      production_json: z.string().nonempty(), // TODO: check schema
     })
     .extend(sharedBucketSchema.shape),
 });
 
-export type DropsLine = z.infer<typeof dropsLineSchema>;
+export type RecipeBucket = z.infer<typeof recipeBucketSchema>;

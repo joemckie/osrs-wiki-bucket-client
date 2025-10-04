@@ -1,5 +1,6 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const infoboxPureBucketSchema = z.object({
   bucketName: z.literal('infobox_pure'),
@@ -7,7 +8,7 @@ export const infoboxPureBucketSchema = z.object({
     .object({
       name: z.string().nonempty(),
       image: z.string().nonempty().nullable(),
-      is_members_only: z.boolean().nullable(),
+      is_members_only: wikiBooleanSchema,
       type: z.string().nonempty(),
       max_hit: z.coerce.number().nonnegative().nullable(),
       combat_level: z.coerce.number().nonnegative(),

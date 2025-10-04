@@ -1,6 +1,7 @@
 import z from 'zod';
 import { leagueRegionSchema } from '../osrs/league-region-schema';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const infoboxItemBucketSchema = z.object({
   bucketName: z.literal('infobox_item'),
@@ -8,7 +9,7 @@ export const infoboxItemBucketSchema = z.object({
     .object({
       item_name: z.string().nonempty(),
       image: z.string().nonempty(),
-      is_members_only: z.boolean(),
+      is_members_only: wikiBooleanSchema,
       item_id: z.int().nonnegative(),
       examine: z.string().nonempty(),
       high_alchemy_value: z.int().nonnegative(),
@@ -18,7 +19,7 @@ export const infoboxItemBucketSchema = z.object({
       weight: z.number().nonnegative(),
       version_anchor: z.string().nonempty(),
       buy_limit: z.int().nonnegative(),
-      default_version: z.boolean(),
+      default_version: wikiBooleanSchema,
     })
     .extend(sharedBucketSchema.shape),
 });

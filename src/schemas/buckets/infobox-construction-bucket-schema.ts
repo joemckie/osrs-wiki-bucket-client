@@ -1,11 +1,12 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
+import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const infoboxConstructionBucketSchema = z.object({
   bucketName: z.literal('infobox_construction'),
   fields: z
     .object({
-      default_version: z.boolean(),
+      default_version: wikiBooleanSchema,
       image: z.string().nonempty(),
       icon: z.string().nonempty(),
       item_id: z.int().nonnegative(),

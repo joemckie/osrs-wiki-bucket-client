@@ -1,15 +1,13 @@
 import z from 'zod';
 import { sharedBucketSchema } from './bucket-page-name-schema';
 
-export const dropsLineSchema = z.object({
-  bucketName: z.literal('dropsline'),
+export const transcriptBucketSchema = z.object({
+  bucketName: z.literal('transcript'),
   fields: z
     .object({
-      item_name: z.string().nonempty(),
-      drop_json: z.string().nonempty(),
-      rare_drop_table: z.boolean(),
+      npcs: z.array(z.string().nonempty()),
     })
     .extend(sharedBucketSchema.shape),
 });
 
-export type DropsLine = z.infer<typeof dropsLineSchema>;
+export type TranscriptBucket = z.infer<typeof transcriptBucketSchema>;
