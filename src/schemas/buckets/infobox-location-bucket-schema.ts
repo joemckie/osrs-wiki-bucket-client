@@ -4,11 +4,13 @@ import { wikiBooleanSchema } from './transformers/wiki-boolean-transformer';
 
 export const infoboxLocationBucketSchema = z.object({
   bucketName: z.literal('infobox_location'),
-  fields: z
-    .object({
-      is_members_only: wikiBooleanSchema,
-    })
-    .extend(sharedBucketSchema.shape),
+  bucket: z.array(
+    z
+      .object({
+        is_members_only: wikiBooleanSchema,
+      })
+      .extend(sharedBucketSchema.shape),
+  ),
 });
 
 export type InfoboxLocationBucket = z.infer<typeof infoboxLocationBucketSchema>;

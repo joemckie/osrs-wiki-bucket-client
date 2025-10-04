@@ -1,8 +1,9 @@
-import type { Bucket } from './schemas/buckets/bucket-schema';
+import z, { type ZodLiteral, type ZodObject } from 'zod';
+import { constants } from './config/constants';
+import { bucketSchema, type Bucket } from './schemas/buckets/bucket-schema';
+import type { Selector } from './types/selector';
 
-type Selector<T extends Bucket['fields']> = Partial<Record<keyof T, true>>;
-
-interface BucketApiQueryOptions<T extends Bucket['fields']> {
+interface BucketApiQueryOptions<T extends Bucket['bucket'][number]> {
   select: Selector<T>;
   where?: '';
   limit?: number;
@@ -11,31 +12,64 @@ interface BucketApiQueryOptions<T extends Bucket['fields']> {
 
 export async function queryBucket<
   BucketName extends Bucket['bucketName'],
-  BucketFields extends Extract<Bucket, { bucketName: BucketName }>['fields'],
+  BucketFields extends Extract<
+    Bucket,
+    { bucketName: BucketName }
+  >['bucket'][number],
   Options extends BucketApiQueryOptions<BucketFields>,
-  BucketLineItem extends {
-    [K in keyof BucketFields as Options['select'][K] extends true
-      ? K
-      : never]: BucketFields[K];
-  },
 >(
   bucket: BucketName,
   { select, limit = 0, offset = 0, where = '' }: Options,
-): Promise<BucketLineItem[]> {
+): Promise<
+  {
+    [K in keyof BucketFields as Options['select'][K] extends true
+      ? K
+      : never]: BucketFields[K];
+  }[]
+> {
   const query = [
     `bucket("${bucket}")`,
-    `select(${
-      select === '*'
-        ? '"*"'
-        : Object.keys(select || {})
-            .map((key) => `"${key}"`)
-            .join(',')
-    })`,
+    `select(${Object.keys(select)
+      .map((key) => `"${key}"`)
+      .join(',')})`,
     ...(limit ? [`limit(${limit})`] : []),
     ...(offset ? [`offset(${offset})`] : []),
     ...(where ? [`where(${where})`] : []),
     'run()',
   ].join('.');
 
-  return [];
+  const url = new URL(`${constants.wikiUrl}/api.php`);
+
+  url.searchParams.set('action', 'bucket');
+  url.searchParams.set('query', query);
+  url.searchParams.set('format', 'json');
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      'User-Agent': constants.userAgent,
+    },
+  });
+
+  const requestedBucketSchema = bucketSchema.options.find(
+    (
+      b,
+    ): b is Extract<
+      (typeof bucketSchema)['options'][number],
+      ZodObject<{ bucketName: ZodLiteral<BucketName> }>
+    > => [...b.def.shape.bucketName.values].includes(bucket),
+  );
+
+  requestedBucketSchema?.shape.bucket.element.shape;
+
+  if (!requestedBucketSchema) {
+    throw new Error(`Bucket schema not configured: ${bucket}`);
+  }
+
+  const itemShape = requestedBucketSchema.def.shape.bucket.element.shape;
+
+  const limitedResponseSchema = z.object({
+    bucket: z.array(z.object(itemShape).pick(select)),
+  });
+
+  return limitedResponseSchema.parse(await response.json()).bucket;
 }

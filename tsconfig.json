@@ -1,7 +1,11 @@
 {
   "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext"
   },
   "include": ["src/**/*.ts"]
 }

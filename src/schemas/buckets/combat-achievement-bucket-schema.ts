@@ -6,17 +6,19 @@ import { sharedBucketSchema } from './bucket-page-name-schema';
 
 export const combatAchievementBucketSchema = z.object({
   bucketName: z.literal('combat_achievement'),
-  fields: z
-    .object({
-      id: z.int().nonnegative(),
-      name: z.string().nonempty(),
-      monster: z.string().nonempty(),
-      task: z.string().nonempty(),
-      tier: combatAchievementTierSchema,
-      type: combatAchievementTypeSchema,
-      league_region: leagueRegionSchema,
-    })
-    .extend(sharedBucketSchema.shape),
+  bucket: z.array(
+    z
+      .object({
+        id: z.int().nonnegative(),
+        name: z.string().nonempty(),
+        monster: z.string().nonempty(),
+        task: z.string().nonempty(),
+        tier: combatAchievementTierSchema,
+        type: combatAchievementTypeSchema,
+        league_region: leagueRegionSchema,
+      })
+      .extend(sharedBucketSchema.shape),
+  ),
 });
 
 export type CombatAchievementBucket = z.infer<

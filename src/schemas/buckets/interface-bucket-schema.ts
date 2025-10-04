@@ -3,12 +3,14 @@ import { sharedBucketSchema } from './bucket-page-name-schema';
 
 export const interfaceBucketSchema = z.object({
   bucketName: z.literal('interface'),
-  fields: z
-    .object({
-      name: z.string().nonempty(),
-      id: z.int().nonnegative(),
-    })
-    .extend(sharedBucketSchema.shape),
+  bucket: z.array(
+    z
+      .object({
+        name: z.string().nonempty(),
+        id: z.int().nonnegative(),
+      })
+      .extend(sharedBucketSchema.shape),
+  ),
 });
 
 export type InterfaceBucket = z.infer<typeof interfaceBucketSchema>;
