@@ -7,13 +7,13 @@ export const infoboxConstructionBucketSchema = z.object({
   fields: z
     .object({
       default_version: wikiBooleanSchema,
-      image: z.string().nonempty(),
-      icon: z.string().nonempty(),
-      item_id: z.int().nonnegative(),
-      object_id: z.int().nonnegative(),
+      image: z.array(z.string().nonempty()).min(1),
+      icon: z.array(z.string().nonempty()).min(1),
+      item_id: z.array(z.int().nonnegative()).min(1),
+      object_id: z.array(z.int().nonnegative()).min(1),
       level: z.int().nonnegative(),
       experience: z.int().nonnegative(),
-      uses_skill: z.literal('Construction'),
+      uses_skill: z.array(z.literal('Construction')).min(1),
     })
     .extend(sharedBucketSchema.shape),
 });

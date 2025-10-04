@@ -8,10 +8,10 @@ export const infoboxNpcBucketSchema = z.object({
   fields: z
     .object({
       default_version: wikiBooleanSchema,
-      image: z.string().nonempty(),
+      image: z.array(z.string().nonempty()).min(1),
       is_members_only: wikiBooleanSchema,
       league_region: leagueRegionSchema,
-      npc_id: z.int().nonnegative(),
+      npc_id: z.array(z.int().nonnegative()).min(1),
       release: z.iso.date(),
       examine: z.string().nonempty(),
       location: z.string().nonempty(),

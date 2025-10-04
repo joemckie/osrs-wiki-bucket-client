@@ -9,7 +9,7 @@ export const feedbackBucketSchema = z.object({
       id: z.string().nonempty(),
       comment: z.string().nonempty(),
       resolved: wikiBooleanSchema,
-      category: z.string().nonempty(),
+      category: z.array(z.string().nonempty()).min(1),
       timestamp: z.string().nonempty(),
     })
     .extend(sharedBucketSchema.shape),

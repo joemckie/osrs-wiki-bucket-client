@@ -13,7 +13,7 @@ export const recipeBucketSchema = z.object({
       is_boostable: z.string().nonempty(),
       uses_skill: z.string().nonempty(),
       source_template: z.string().nonempty(),
-      production_json: z.string().nonempty(), // TODO: check schema
+      production_json: z.json(), // TODO: check schema
     })
     .extend(sharedBucketSchema.shape),
 });

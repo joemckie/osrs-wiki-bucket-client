@@ -6,7 +6,7 @@ export const infoboxActivityBucketSchema = z.object({
   bucketName: z.literal('infobox_activity'),
   fields: z
     .object({
-      image: z.string().nonempty(),
+      image: z.string().nonempty().nullable(),
       is_members_only: wikiBooleanSchema,
       default_version: wikiBooleanSchema,
     })

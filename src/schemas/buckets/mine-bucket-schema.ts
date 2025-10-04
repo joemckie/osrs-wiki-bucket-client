@@ -7,7 +7,7 @@ export const mineBucketSchema = z.object({
   fields: z
     .object({
       is_members_only: wikiBooleanSchema,
-      json: z.string().nonempty(), // TODO: add JSON schema
+      json: z.json(), // TODO: add JSON schema
     })
     .extend(sharedBucketSchema.shape),
 });

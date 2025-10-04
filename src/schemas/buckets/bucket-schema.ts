@@ -31,9 +31,11 @@ import { storeLineBucketSchema } from './storeline-bucket-schema';
 import { transcriptBucketSchema } from './transcript-bucket-schema';
 import { updateBucketSchema } from './update-bucket-schema';
 import { varbitBucketSchema } from './varbit-bucket-schema';
+import { dependencyListBucketSchema } from './dependency-list-bucket-schema';
 
 export const bucketSchema = z.discriminatedUnion('bucketName', [
   combatAchievementBucketSchema,
+  dependencyListBucketSchema,
   dropsLineSchema,
   exchangeBucketSchema,
   feedbackBucketSchema,

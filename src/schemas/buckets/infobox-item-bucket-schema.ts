@@ -8,9 +8,9 @@ export const infoboxItemBucketSchema = z.object({
   fields: z
     .object({
       item_name: z.string().nonempty(),
-      image: z.string().nonempty(),
+      image: z.array(z.string().nonempty()).min(1),
       is_members_only: wikiBooleanSchema,
-      item_id: z.int().nonnegative(),
+      item_id: z.array(z.int().nonnegative()).min(1),
       examine: z.string().nonempty(),
       high_alchemy_value: z.int().nonnegative(),
       league_region: leagueRegionSchema,

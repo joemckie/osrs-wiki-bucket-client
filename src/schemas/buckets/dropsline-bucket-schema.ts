@@ -7,7 +7,7 @@ export const dropsLineSchema = z.object({
   fields: z
     .object({
       item_name: z.string().nonempty(),
-      drop_json: z.string().nonempty(),
+      drop_json: z.json(), // TODO: check schemas
       rare_drop_table: wikiBooleanSchema,
     })
     .extend(sharedBucketSchema.shape),

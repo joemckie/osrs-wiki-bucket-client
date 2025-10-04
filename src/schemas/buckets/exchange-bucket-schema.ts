@@ -15,7 +15,7 @@ export const exchangeBucketSchema = z.object({
       limit: z.int().nonnegative(),
       module: z.string().nonempty(),
       is_historical: wikiBooleanSchema,
-      json: z.string().nonempty(),
+      json: z.json(), // TODO: Check schemas,
     })
     .extend(sharedBucketSchema.shape),
 });

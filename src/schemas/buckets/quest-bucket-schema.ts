@@ -15,11 +15,12 @@ export const questBucketSchema = z.object({
         'Experienced',
         'Master',
         'Grandmaster',
+        'Special',
       ]), // TODO: double check
-      official_length: z.enum(['Short', 'Medium', 'Long', 'Very Long']), // TODO: double check
+      official_length: z.string().nonempty(),
       requirements: z.string().nonempty(),
       start_point: z.string().nonempty(),
-      json: z.string().nonempty(), // TODO: check schema
+      json: z.json(), // TODO: check schema
     })
     .extend(sharedBucketSchema.shape),
 });

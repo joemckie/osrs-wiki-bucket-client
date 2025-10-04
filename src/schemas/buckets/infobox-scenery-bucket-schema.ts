@@ -8,12 +8,12 @@ export const infoboxScenerySchema = z.object({
   fields: z
     .object({
       default_version: wikiBooleanSchema,
-      image: z.string().nonempty(),
+      image: z.array(z.string().nonempty()).min(1),
       is_members_only: wikiBooleanSchema,
       league_region: leagueRegionSchema,
       release: z.iso.date(),
-      object_id: z.int().nonnegative(),
-      npc_id: z.int().nonnegative(),
+      object_id: z.array(z.int().nonnegative()).min(1),
+      npc_id: z.array(z.int().nonnegative()).min(1),
     })
     .extend(sharedBucketSchema.shape),
 });

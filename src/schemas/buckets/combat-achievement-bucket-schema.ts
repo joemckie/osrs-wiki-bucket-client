@@ -14,7 +14,7 @@ export const combatAchievementBucketSchema = z.object({
       task: z.string().nonempty(),
       tier: combatAchievementTierSchema,
       type: combatAchievementTypeSchema,
-      league_region: leagueRegionSchema.or(z.array(leagueRegionSchema).min(1)),
+      league_region: leagueRegionSchema,
     })
     .extend(sharedBucketSchema.shape),
 });
