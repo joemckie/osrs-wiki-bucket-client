@@ -3,10 +3,11 @@ import { constants } from './config/constants';
 import { bucketSchema, type Bucket } from './schemas/buckets/bucket-schema';
 import type { Selector } from './types/selector';
 import { isLimitedResponse } from './types/limited-response';
+import type { Condition } from './types/condition';
 
 interface BucketApiQueryOptions<T extends Bucket['bucket'][number]> {
   select: Selector<T>;
-  where?: '';
+  where?: Condition<T>;
   limit?: number;
   offset?: number;
 }
@@ -24,7 +25,7 @@ export async function queryBucket<
   Options extends BucketApiQueryOptions<BucketFields>,
 >(
   bucket: BucketName,
-  { select, limit = 0, offset = 0, where = '' }: Options,
+  { select, limit = 0, offset = 0, where }: Options,
 ): Promise<
   Pick<BucketFields, Extract<keyof Options['select'], keyof BucketFields>>[]
 > {
@@ -36,7 +37,14 @@ export async function queryBucket<
         .join(',')})`,
       ...(limit ? [`limit(${limit})`] : []),
       ...(offset ? [`offset(${offset})`] : []),
-      ...(where ? [`where(${where})`] : []),
+      ...(where
+        ? [
+            `where(${[where.field, where.operator, where.value]
+              .filter(Boolean)
+              .map((value) => `"${value?.toString()}"`)
+              .join(',')})`,
+          ]
+        : []),
       'run()',
     ].join('.');
 

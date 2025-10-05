@@ -17,6 +17,5 @@ export const isLimitedResponse = <
 >(
   data: unknown,
   limitedResponseSchema: ZodObject,
-): data is { bucket: Pick<BucketFields, SelectedFields>[] } => {
-  return limitedResponseSchema.safeParse(data).success;
-};
+): data is { bucket: Pick<BucketFields, SelectedFields>[] } =>
+  limitedResponseSchema.safeParse(data).success;
